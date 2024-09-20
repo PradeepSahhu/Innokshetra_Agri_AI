@@ -1,6 +1,6 @@
 import express from "express"
 import cors from "cors"
-import { getCropRecommendation } from "./prediction.js"
+import { getAiResponse } from "./predict"
 
 
 const app = express()
@@ -26,7 +26,7 @@ app.post("/crop", (req, res) => {
     Rainfall: ${data.rainfall}
     `
 
-    getCropRecommendation(prompt).then((response) => {
+    getAiResponse(prompt).then((response) => {
         res.send(response).status(200)
     }).catch((error) => {
         res.status(500).send("Error in getting response from AI model.")
