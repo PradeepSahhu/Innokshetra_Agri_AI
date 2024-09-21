@@ -42,6 +42,10 @@ body {
   row-gap: 40px;
 }
 
+.graph-container {
+  display: flex;
+}
+
 /*---------------------------------------------------------------------------------*/
 
 /* CSS for width between 220-415px */

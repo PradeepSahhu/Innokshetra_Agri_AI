@@ -1,6 +1,9 @@
-
-body{
-  overflow-x: hidden;  /* Hide Scrollbars on X-axis*/
+body {
+  overflow-x: hidden; /* Hide Scrollbars on X-axis*/
+}
+.main-container {
+  /* display: grid; */
+  justify-content: center;
 }
 
 .crop-result-p {
@@ -35,7 +38,7 @@ body{
   font-weight: bolder;
   border-radius: 3px;
   width: 10rem;
-  margin-left: 45%;
+  margin-left: 50%;
   margin-top: 1%;
   margin-bottom: 5%;
 }
@@ -49,9 +52,31 @@ body{
 }
 
 .crop-result-img {
-  max-width: 23%;
+  max-width: 30%;
   margin-left: 40%;
   border-radius: 3px;
+}
+/* .graph-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+} */
+
+.graph-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+#barGraphTemp,
+#barGraphPressure,
+#barGraphHumidity,
+#radarChart {
+  max-width: 30rem;
+  max-height: 30rem;
+  margin: 3rem;
 }
 
 /*------------------------------------------------------------------------*/

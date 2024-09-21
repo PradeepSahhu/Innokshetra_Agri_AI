@@ -57,7 +57,6 @@
 
 /* CSS for width above 830px */
 @media (width < 830px) {
-
   /* At 830px of Width, Hide the 3D model on smaller screens */
   .container {
     display: none;
