@@ -63,7 +63,7 @@ async function createBarGraph() {
 
   const datas = {
     labels: ["Humidity", ""],
-    values: [sensorData ? sensorData[3] : 700],
+    values: [sensorData ? sensorData[3] : 70],
   };
   //   if (!data) return;
 
@@ -88,8 +88,8 @@ async function createBarGraph() {
       scales: {
         y: {
           beginAtZero: true,
-          min: 20,
-          max: 1000,
+          min: 0,
+          max: 100,
         },
         r: {
           beginAtZero: true,
