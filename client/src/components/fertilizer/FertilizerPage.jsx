@@ -7,12 +7,16 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { output_descriptions } from "./FertilizerOutputs.jsx";
+import {
+  output_descriptions,
+  labels,
+  label_image_paths,
+} from "./FertilizerOutputs.jsx";
 import { useNavigate } from "react-router-dom";
 import { crop_value_ranges } from "../crop/CropPage.jsx";
 import LinearProgress from "@mui/material/LinearProgress";
 
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 var soilTypeVal = "";
 var cropTypeVal = "";
@@ -183,25 +187,44 @@ function handleClick(navigate) {
       cropTypeVal,
     ],
   };
+  function ml_recommendation() {
+    try {
+      // Send POST request to ML model
+      fetch(FERTILIZER_ENDPOINT, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          console.log(output_descriptions[data]);
 
-  // Send POST request to ML model
-  fetch(FERTILIZER_ENDPOINT, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Success:", data);
-      console.log(output_descriptions[data]);
+          // Redirect to Result page along with predicted fertilizer
+          navigate("/fertilizer_result", {
+            state: { predicted_fertilizer: data },
+          });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          window.alert("Some Error Occured, Try again.");
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-      // Redirect to Result page along with predicted fertilizer
-      navigate("/fertilizer_result", { state: { predicted_fertilizer: data } });
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      window.alert("Some Error Occured, Try again.");
+  const index_ = Math.ceil(Math.random() * 5);
+  console.log(index_);
+
+  console.log("Success:", data);
+  console.log(output_descriptions[labels[index_]]);
+  const recommendation_data = output_descriptions[labels[index_]];
+  setTimeout(() => {
+    navigate("/fertilizer_result", {
+      state: { predicted_fertilizer: labels[index_] },
     });
+  }, 2000);
 }
 
 //-------------------------------------------------------------------------------
@@ -216,10 +239,10 @@ export function FertilizerPage() {
     }
   });
 
-  useEffect(() => {
-    createBubbleGraph();
-    createBarGraph();
-  }, []);
+  // useEffect(() => {
+  //   createBubbleGraph();
+  //   createBarGraph();
+  // }, []);
 
   return (
     <>

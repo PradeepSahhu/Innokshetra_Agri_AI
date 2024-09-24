@@ -2,7 +2,6 @@ body {
   background-color: white;
 }
 
-
 .crop-p {
   color: black;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -10,6 +9,16 @@ body {
   font-size: x-large;
   margin-left: 23%;
   margin-top: 5%;
+}
+
+.text-field {
+  display: flex;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin: 3rem 1rem;
 }
 
 .predict_crop_btn {

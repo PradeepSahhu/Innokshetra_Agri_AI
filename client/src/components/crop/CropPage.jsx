@@ -11,14 +11,15 @@ import { useEffect } from "react";
 
 async function settingData() {
   const apiNitro = Math.random() * 50 + 1;
-  const randomPhos = Math.random() * 100 + 1;
-  const randomHumidity = Math.random() * 50 + 1;
-  const randomPh = Math.random() * 10 + 1;
-  const randomPotassium = Math.random() * 100 + 1;
+  const apiPhos = Math.random() * 100 + 1;
+  const apiHumidity = Math.random() * 50 + 1;
+  const apiPotassium = Math.random() * 50 + 1;
+  const apiPh = Math.random() * 10 + 1;
 
   let sensorData;
   try {
     // Fetch sensor data from the backend
+
     const sensor_data = await axios.get("http://localhost:3000/");
 
     // Assuming the backend returns a comma-separated string like "25,30,6.5,100"
@@ -27,13 +28,20 @@ async function settingData() {
     console.log("Fetched sensor data: ", sensorData);
 
     // Set the values of the input fields by their IDs
+    document.getElementById("nitrogen-crop-input").focus();
     document.getElementById("nitrogen-crop-input").value = apiNitro;
+    document.getElementById("temp-crop-input").focus();
     document.getElementById("temp-crop-input").value = sensorData[0];
-    document.getElementById("phosphorous-crop-input").value = 20;
-    document.getElementById("humidity-crop-input").value = 30;
-    document.getElementById("potassium-crop-input").value = 18;
-    document.getElementById("ph-crop-input").value = 5;
-    document.getElementById("rainfall-crop-input").value = 700;
+    document.getElementById("phosphorous-crop-input").focus();
+    document.getElementById("phosphorous-crop-input").value = apiPhos;
+    document.getElementById("humidity-crop-input").focus();
+    document.getElementById("humidity-crop-input").value = apiHumidity;
+    document.getElementById("potassium-crop-input").focus();
+    document.getElementById("potassium-crop-input").value = apiPotassium;
+    document.getElementById("ph-crop-input").focus();
+    document.getElementById("ph-crop-input").value = apiPh;
+    document.getElementById("rainfall-crop-input").focus();
+    document.getElementById("rainfall-crop-input").value = sensorData[3];
   } catch (error) {
     console.error("Error fetching data from backend: ", error);
   }
@@ -61,6 +69,15 @@ function focusEmptyFields() {
   }
 
   return 1;
+}
+
+// Getting Data from Backend API
+async function backendAPICall() {
+  const CROP_API_ENDPOINT = `https://8080-797137136eb6451193a1f8c64a951490.onpatr.cloud/fertilizer_recommend`;
+
+  const data = await axios.get(CROP_API_ENDPOINT);
+
+  return data;
 }
 
 //--------------------------------------------------------------------
@@ -203,64 +220,93 @@ export function CropPage() {
         your farm 👩‍🌾🌽🚜
       </p>
       <div className="crop-container">
-        <TextField
-          id="nitrogen-crop-input"
-          label="Ratio of Nitrogen"
-          variant="outlined"
-          color="success"
-          type="number"
-        />
-        <TextField
-          id="temp-crop-input"
-          label="Temperature in Celsius"
-          variant="outlined"
-          color="success"
-          type="number"
-          inputProps={{ min: 5, max: 50 }}
-        />
-        <TextField
-          id="phosphorous-crop-input"
-          label="Ratio of Phosphorous"
-          variant="outlined"
-          color="success"
-          type="number"
-        />
-        <TextField
-          id="humidity-crop-input"
-          label="% of Humidity"
-          variant="outlined"
-          color="success"
-          type="number"
-        />
-        <TextField
-          id="potassium-crop-input"
-          label="Ratio of Potassium"
-          variant="outlined"
-          color="success"
-          type="number"
-        />
-        <TextField
-          id="ph-crop-input"
-          label="PH Level of soil"
-          variant="outlined"
-          color="success"
-          type="number"
-        />
-        <TextField
-          id="rainfall-crop-input"
-          label="Rainfall in Milimeter (mm)"
-          variant="outlined"
-          color="success"
-          type="number"
-        />
+        <div className="text-field">
+          <label>Ratio of Nitrogen</label>
+          <input
+            id="nitrogen-crop-input"
+            label="Ratio of Nitrogen"
+            variant="outlined"
+            color="success"
+            type="number"
+          />
+        </div>
+
+        <div className="text-field">
+          <label>Temperature In Celsius</label>
+          <input
+            id="temp-crop-input"
+            label="Temperature in Celsius"
+            variant="outlined"
+            color="success"
+            type="number"
+            inputProps={{ min: 5, max: 50 }}
+          />
+        </div>
+
+        <div className="text-field">
+          <label>Ratio of Phosphorous</label>
+
+          <input
+            id="phosphorous-crop-input"
+            label="Ratio of Phosphorous"
+            variant="outlined"
+            color="success"
+            type="number"
+          />
+        </div>
+
+        <div className="text-field">
+          <label>% of Humitidy </label>
+          <input
+            id="humidity-crop-input"
+            label="% of Humidity"
+            variant="outlined"
+            color="success"
+            type="number"
+          />
+        </div>
+
+        <div className="text-field">
+          <label>Ratio of Postassium</label>
+          <input
+            id="potassium-crop-input"
+            label="Ratio of Potassium"
+            variant="outlined"
+            color="success"
+            type="number"
+          />
+        </div>
+        <div className="text-field">
+          <label>PH Level of Soil</label>
+
+          <input
+            id="ph-crop-input"
+            label="PH Level of soil"
+            variant="outlined"
+            color="success"
+            type="number"
+          />
+        </div>
+        <div className="text-field">
+          <label>Rainfall in Milimeter (mm)</label>
+          <input
+            id="rainfall-crop-input"
+            label="Rainfall in Milimeter (mm)"
+            variant="outlined"
+            color="success"
+            type="number"
+          />
+        </div>
+      </div>
+      <div className="button-container">
         <button
           className="predict_crop_btn"
           onClick={() => handleClick(navigate)}
         >
-          {" "}
-          PREDICT{" "}
+          PREDICT
         </button>
       </div>
     </>
   );
 }
+backendAPICall();
